@@ -1,0 +1,30 @@
+name: dockerpostgis
+
+services:
+  db:
+    image: postgis/postgis
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root123
+      POSTGRES_DB: postgres # default database
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: lefort@connect-228.com
+      PGADMIN_DEFAULT_PASSWORD: lefort123
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pg_data:
+  pgadmin_data:

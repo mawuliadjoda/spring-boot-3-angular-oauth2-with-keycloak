@@ -2,6 +2,7 @@ package com.adjoda.config;
 
 import com.adjoda.jwt.CustomJwt;
 import com.adjoda.jwt.CustomJwtConverter;
+import com.adjoda.persistence.repositories.RoleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -17,6 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+    private final RoleRepository roleRepository;
+
+    public SecurityConfig(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -30,6 +36,6 @@ public class SecurityConfig {
 
     @Bean
     public Converter<Jwt, CustomJwt> customJwtConverter() {
-        return new CustomJwtConverter();
+        return new CustomJwtConverter(roleRepository);
     }
 }

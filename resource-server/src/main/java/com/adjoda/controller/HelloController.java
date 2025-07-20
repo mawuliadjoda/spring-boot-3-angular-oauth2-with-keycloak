@@ -22,7 +22,9 @@ public class HelloController {
      * @return
      */
     @GetMapping("/hello")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasAuthority('CAN_VIEW_CLIENTS')")
+    @PreAuthorize("hasAnyAuthority('CAN_ASSIGN_CONTRACTS', 'CAN_VIEW_CLIENTS')")
     public Message hello() {
         var jwt = (CustomJwt) SecurityContextHolder.getContext().getAuthentication();
         var message = MessageFormat.format(

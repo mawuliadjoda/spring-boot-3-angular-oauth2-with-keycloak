@@ -1,0 +1,48 @@
+
+
+spring:
+  application:
+    name: '@project.artifactId@'
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+    properties:
+      hibernate:
+        #generate_statistics: true
+        format_sql: true
+        #use_sql_comments: true
+        default_schema: mon_schema
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/app_db?currentSchema=mon_schema
+    username: root
+    password: root123
+  #sql:
+  #  init:
+  #    mode: always
+  #    continue-on-error: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # configuration needed for validating JWT token against our Keycloak server
+          issuer-uri: http://localhost:8080/realms/adjoda-dev-realm
+
+          # Since JWT is signed and we need to verify its signature, we set the jwk-set-uri property to a Keycloak endpoint with
+          # the required data for JWT signature verification.
+          jwk-set-uri: http://localhost:8080/realms/adjoda-dev-realm/protocol/openid-connect/certs
+server:
+  port: 8181
+
+
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        stat: debug
